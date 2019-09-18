@@ -13,8 +13,10 @@ class Navbar extends Component {
         return (
             <Appbar position="fixed">
                 <Toolbar className="nav-container">
-                    <Button color="inherit" component={Link} to="/login">Login</Button>
-                    <Button color="inherit" component={Link} to="/signup">SignUp</Button>
+                    {!this.props.authenticated && (
+                        <Button color="inherit" component={Link} to="/login">Login</Button>)}
+                    {!this.props.authenticated && (
+                        <Button color="inherit" component={Link} to="/signup">SignUp</Button>)}
                     <Button color="inherit" component={Link} to="/">Home</Button>
                 </Toolbar>
             </Appbar>
