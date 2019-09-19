@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import Grid from '@material-ui/core/Grid';
 import axios from 'axios';
 
+import { connect } from 'react-redux';
+
 import Scream from './../components/Scream';
 
 class home extends Component {
@@ -30,11 +32,17 @@ class home extends Component {
                     {recentScreamsMarkup}
                 </Grid>
                 <Grid item sm={4} xs={12}>
-                    <p>Profile..</p>
+                    {this.props.user.authenticated ? <p>Profile..</p> : <p>No Profile..</p> }
+                    
                 </Grid>
             </Grid>
         )
     }
 }
 
-export default home
+const mapStateToProps = (state) => ({
+    user: state.user,
+    UI: state.UI
+});
+
+export default connect(mapStateToProps)(home)

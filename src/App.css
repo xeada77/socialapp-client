@@ -12,8 +12,12 @@ body {
 }
 
 .nav-container {
-  margin:auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+ 
 }
+
 
 a{
   text-decoration: none;
