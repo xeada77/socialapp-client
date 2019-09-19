@@ -48,33 +48,18 @@ class login extends Component {
         this.state = {
             email: '',
             password: '',
-            loading: false,
             errors:{},
         }
     }
 
     handleSubmit = async (event) => {
         event.preventDefault();
-        this.setState({ loading: true });
         const userData = {
             email: this.state.email,
             password: this.state.password,
         }
         
-        try {
-            const response = await axios.post('/login', userData);
-            console.log(response.data);
-            localStorage.setItem('FBIdToken', `Bearer ${response.data.token}`);
-            this.setState({ loading: false });
-            this.props.history.push('/');
-        } catch (err) {
-            console.log(err.response.data);
-            this.setState({
-                errors: err.response.data,
-                loading: false
-            });
-            //console.log(this.state);
-        }
+        
         
     }
 
