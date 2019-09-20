@@ -12,7 +12,6 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import AccountCircle from '@material-ui/icons/AccountCircle';
-import { mergeClasses } from '@material-ui/styles';
 
 const styles = {
     grow: {
@@ -26,29 +25,36 @@ class Navbar extends Component {
         this.props.logoutUser(this.props.history);
     };
     render() {
-        const { classes } = this.props;
+        const { authenticated, classes, loadingUser } = this.props;
         return (
             <Appbar position="fixed" className="nav-container" >
                 <Toolbar className="nav-container">
                     <Button color="inherit" component={Link} to="/" className="home-but">Home</Button>
                     <div className={classes.grow} />
-                    {!this.props.authenticated && (
-                        <Button color="inherit" component={Link} to="/login" className="user-but">Login</Button>)}
-                    {!this.props.authenticated && (
-                        <Button color="inherit" component={Link} to="/signup" className="user-but">SignUp</Button>)}
-                    {this.props.authenticated && (
-                        <Button color="inherit" onClick={this.logout} className="user-but">Logout</Button>)}
-                    {this.props.authenticated &&
-                        (<IconButton
+                    {!loadingUser && (
+                    <div className="nav-action-container">
+                    {!authenticated && (
+                        <div>
+                            <Button color="inherit" component={Link} to="/login" className="user-but">Login</Button>
+                            <Button color="inherit" component={Link} to="/signup" className="user-but">SignUp</Button>
+                        </div>
+                    )}
+                    {authenticated &&
+                        (<div>
+                            <Button color="inherit" onClick={this.logout} className="user-but">Logout</Button>
+                            <IconButton
                             edge="end"
                             aria-label="account of current user"
                             aria-haspopup="true"
                             color="inherit"
                             className="user-but"
-                        >
-                            <AccountCircle />
-                        </IconButton>)
-                    }                    
+                            >
+                                <AccountCircle />
+                            </IconButton>
+                        </div>
+                                )}
+                        </div>
+                    )}    
                 </Toolbar>
             </Appbar>
         )

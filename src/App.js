@@ -23,11 +23,11 @@ const theme = createMuiTheme(themeDefault);
 
 class App extends Component {
   render() {
-    return (
-      <MuiThemeProvider theme={theme}>
-        
+    const { authenticated, loadingUser } = this.props;
+    return (      
+      <MuiThemeProvider theme={theme}>        
         <Router>
-          <Route path="/" render={(props) => <Navbar {...props} authenticated={this.props.authenticated}/> } />
+          <Route path="/" render={(props) => <Navbar {...props} authenticated={authenticated} loadingUser={loadingUser}/> } />
             <div className="container"> 
               <Switch>
                   <Route exact path="/" component={home} />
@@ -53,6 +53,7 @@ class App extends Component {
 
 const mapStateToProps = (state) => ({
   authenticated: state.user.authenticated,
+  loadingUser: state.user.loading
 });
 
 export default connect(mapStateToProps)(App)

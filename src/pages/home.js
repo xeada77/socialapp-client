@@ -5,6 +5,7 @@ import axios from 'axios';
 import { connect } from 'react-redux';
 
 import Scream from './../components/Scream';
+import Profile from './../components/Profile';
 
 class home extends Component {
     constructor(props) {
@@ -22,6 +23,8 @@ class home extends Component {
     }
 
     render() {
+        const { user } = this.props;
+
         let recentScreamsMarkup = this.state.screams ?
             (this.state.screams.map(scream => { return <Scream scream={scream} key={scream.screamId} /> })) :
             <p>Loading....</p>
@@ -32,8 +35,7 @@ class home extends Component {
                     {recentScreamsMarkup}
                 </Grid>
                 <Grid item sm={4} xs={12}>
-                    {this.props.user.authenticated ? <p>Profile..</p> : <p>No Profile..</p> }
-                    
+                    <Profile user={user} />                    
                 </Grid>
             </Grid>
         )
@@ -42,7 +44,6 @@ class home extends Component {
 
 const mapStateToProps = (state) => ({
     user: state.user,
-    UI: state.UI
 });
 
 export default connect(mapStateToProps)(home)

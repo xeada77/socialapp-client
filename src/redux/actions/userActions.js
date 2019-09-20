@@ -1,4 +1,4 @@
-import { SET_ERRORS, SET_USER, CLEAR_ERRORS, LOADING_UI, SET_UNAUTHENTICATED } from './../types';
+import { SET_ERRORS, SET_USER, CLEAR_ERRORS, LOADING_UI, SET_UNAUTHENTICATED, LOADING_USER } from './../types';
 import axios from 'axios';
 
 // Helper authorization header
@@ -16,7 +16,7 @@ export const loginUser =  (userData, history) =>  (dispatch) => {
             setAuthorizationHeader(response.data.token);
             dispatch(getUserData());
             dispatch({ type: CLEAR_ERRORS });
-            history.push('/');
+            history.push('/');  
         })
         .catch(err => {
             dispatch({
@@ -28,7 +28,8 @@ export const loginUser =  (userData, history) =>  (dispatch) => {
 };
 
 export const getUserData = () => async (dispatch) => {
-    
+  
+    dispatch({ type: LOADING_USER });  
     axios.get('/user')
         .then(response => {
             dispatch({
