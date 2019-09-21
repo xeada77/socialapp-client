@@ -12,6 +12,8 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import AccountCircle from '@material-ui/icons/AccountCircle';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
 
 const styles = {
     grow: {
@@ -20,12 +22,35 @@ const styles = {
 }
 
 class Navbar extends Component {
+
+    constructor() {
+        super();
+        this.state = {
+            anchorEl: null,
+            menuIsOpen: false
+        }
+    }
     
     logout = () => {
         this.props.logoutUser(this.props.history);
     };
+
+    handleOpenMenu = (event) => {
+        //console.log(event.currentTarget);
+        this.setState({
+            anchorEl: event.currentTarget,
+            menuIsOpen: true
+        });
+    }
+
+    handleCloseMenu = () => {
+        this.setState({
+            anchorEl: null,
+            menuIsOpen: false
+        });
+    }
     render() {
-        const { authenticated, classes, loadingUser } = this.props;
+        const { user: {authenticated}, classes, loadingUser } = this.props;
         return (
             <Appbar position="fixed" className="nav-container" >
                 <Toolbar className="nav-container">
@@ -48,9 +73,21 @@ class Navbar extends Component {
                             aria-haspopup="true"
                             color="inherit"
                             className="user-but"
+                            onClick={this.handleOpenMenu}
                             >
                                 <AccountCircle />
-                            </IconButton>
+                                </IconButton>
+                                <Menu
+                                    id="simple-menu"
+                                    anchorEl={this.state.anchorEl}
+                                    keepMounted
+                                    open={this.state.menuIsOpen}
+                                    onClose={this.handleCloseMenu}
+                                >
+                                    <MenuItem onClick={this.handleCloseMenu}>Profile</MenuItem>
+                                    <MenuItem onClick={this.handleCloseMenu}>My account</MenuItem>
+                                    <MenuItem onClick={this.handleCloseMenu}>Logout</MenuItem>
+                                    </Menu>
                         </div>
                                 )}
                         </div>
