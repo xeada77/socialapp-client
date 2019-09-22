@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import dayjs from 'dayjs';
 import theme from './../util/theme';
 import EditDetails from './EditDetails';
+import MyButton from '../util/MyButton'
 
 
 import withStyles from '@material-ui/core/styles/withStyles';
@@ -98,11 +99,9 @@ class Profile extends Component {
                         <div className="image-wrapper">
                             <img className="profile-image" src={imgUrl} alt="Profile" />
                             <input type="file" id="imageInput" hidden="hidden" onChange={this.handleImageChange} />
-                            <Tooltip placement="right" title="Edit profile picture">
-                                <IconButton onClick={this.handleEditPicture} className="button">
-                                    <EditIcon color="primary"/>
-                                </IconButton>
-                            </Tooltip>
+                            <MyButton tip="Edit profile picture" onClick={this.handleEditPicture} placement="right" btnClassName="button" >
+                                <EditIcon color="primary"/>
+                            </MyButton>
                         </div>
                         <hr />
                         <div className="profile-details">
@@ -133,6 +132,7 @@ class Profile extends Component {
                                 <CalendarToday color="primary" />
                                 <span>{` Miembro desde ${dayjs(createdAt).format('MMMM YYYY')}`}
                                 </span>
+                                <hr/>
                                 </Fragment>
                             }
                             <EditDetails/>

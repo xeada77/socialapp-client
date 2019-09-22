@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import withStyles from '@material-ui/core/styles/withStyles';
 import { editUserDetails } from './../redux/actions/userActions';
 import { connect } from 'react-redux';
+import MyButton from '../util/MyButton';
 
 
 // MUI Stuff
@@ -10,17 +11,19 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import IconButton from '@material-ui/core/IconButton';
 
 // Icons
 import EditIcon from '@material-ui/icons/Edit';
-import Tooltip from '@material-ui/core/Tooltip';
 import TextField from '@material-ui/core/TextField';
 import theme from '../util/theme';
 import { Button } from '@material-ui/core';
 
 const styles = (theme) => ({
-    ...theme
+    ...theme,
+    textField: {
+        marginTop: 10
+        
+    }
 });
 
 class EditDetails extends Component {
@@ -75,11 +78,14 @@ class EditDetails extends Component {
         const { classes } = this.props;
         return (
             <Fragment>
-                <Tooltip title="Edit details" placement="top">
-                    <IconButton onClick={this.handleOpen} className={classes.button}>
-                        <EditIcon color="primary" />
-                    </IconButton>
-                </Tooltip>
+                <MyButton
+                    tip="Edit details"
+                    onClick={this.handleOpen}
+                    placement="right"
+                    btnClassName={classes.button}
+                >
+                    <EditIcon color="primary"/>
+                </MyButton>
                 <Dialog
                     open={this.state.open}
                     onClose={this.handleClose}
@@ -94,7 +100,7 @@ class EditDetails extends Component {
                                 type="text"
                                 label="Bio"
                                 multiline
-                                rows="3"
+                                rows="4"
                                 placeholder="A short bio about yourself"
                                 className={classes.textField}
                                 value={this.state.bio}

@@ -1,5 +1,6 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { Link } from 'react-router-dom';
+import MyButton from '../util/MyButton'
 
 // Redux Stuff
 import { connect } from 'react-redux';
@@ -14,6 +15,9 @@ import IconButton from '@material-ui/core/IconButton';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
+import AddIcon from '@material-ui/icons/Add';
+import NotificationIcon from '@material-ui/icons/Notifications';
+import HomeIcon from '@material-ui/icons/Home';
 
 const styles = {
     grow: {
@@ -54,7 +58,20 @@ class Navbar extends Component {
         return (
             <Appbar position="fixed" className="nav-container" >
                 <Toolbar className="nav-container">
-                    <Button color="inherit" component={Link} to="/" className="home-but">Home</Button>
+                    <MyButton tip="Home">
+                        <Link to="/"><HomeIcon  /></Link>
+                    </MyButton>
+                    {authenticated &&
+                        (
+                        <Fragment>
+                            <MyButton tip="Post a Scream!">
+                                <AddIcon  />
+                            </MyButton>
+                            <MyButton tip="Notifications">
+                                <NotificationIcon  />
+                            </MyButton>
+                        </Fragment>
+                        )}
                     <div className={classes.grow} />
                     {!loadingUser && (
                     <div className="nav-action-container">

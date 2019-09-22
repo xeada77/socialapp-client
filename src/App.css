@@ -18,6 +18,10 @@ body {
  
 }
 
+.nav-container svg {
+  color: #fff;
+}
+
 .loading-container {
   display: flex;
   justify-content: center;
