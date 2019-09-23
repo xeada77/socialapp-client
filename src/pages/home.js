@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import axios from 'axios';
+
 
 import { connect } from 'react-redux';
 import { uploadImage } from './../redux/actions/userActions';
+import { getScreams, likeScream } from '../redux/actions/dataActions';
 
 import Scream from './../components/Scream';
 import Profile from './../components/Profile';
@@ -12,25 +13,50 @@ import Grid from '@material-ui/core/Grid';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
 class home extends Component {
+
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = {
+            screams: [],
+            authenticated: false
+        };
     }
 
     async componentDidMount() {
-        try {
-            const screams = await axios.get('/screams');
-            this.setState({ screams: screams.data });
-        } catch (err) {
-            console.log(err);
+        this.props.getScreams();
+        this.setState({ screams: this.props.screams, authenticated: this.props.user.authenticated});
+    }
+
+    static getDerivedStateFromProps(nextProps, prevState) {
+        console.log(nextProps);
+        if (nextProps.user.authenticated) {
+            return {
+                ...prevState,
+                authenticated: nextProps.user.authenticated
+            }
         }
+        return null;
+    }
+
+    handleLike = (screamId) => {
+        const { user:{authenticated}, likeScream } = this.props;
+        if(authenticated) {
+            //console.log(screamId);
+            likeScream(screamId); 
+        } else {
+            console.log('Not authenticated');
+        }
+        
+
     }
 
     render() {
-        const { user, uploadImage } = this.props;
+        //getScreams();
+        const { user, uploadImage, screams } = this.props;
+        //const {screams} = this.state;
 
-        let recentScreamsMarkup = this.state.screams ?
-            (this.state.screams.map(scream => { return <Scream scream={scream} key={scream.screamId} /> })) :
+        let recentScreamsMarkup = screams ?
+            (screams.map(scream => { return <Scream scream={scream} key={scream.screamId} handleLike={this.handleLike} authenticated={this.state.authenticated}/> })) :
             <div className="loading-container"><CircularProgress size="5rem" /></div>
 
         return (
@@ -48,10 +74,13 @@ class home extends Component {
 
 const mapStateToProps = (state) => ({
     user: state.user,
+    screams: state.data.screams
 });
 
 const mapActionsToProps = {
-    uploadImage
+    uploadImage,
+    getScreams,
+    likeScream
 }
 
 export default connect(mapStateToProps, mapActionsToProps)(home)

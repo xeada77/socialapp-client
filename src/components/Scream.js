@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import MyButton from '../util/MyButton';
 import withStyles from '@material-ui/core/styles/withStyles';
 import { Link } from 'react-router-dom';
 import dayjs from 'dayjs';
@@ -10,6 +11,9 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import { Typography } from '@material-ui/core';
+
+// Icons
+import LikeIcon from '@material-ui/icons/ThumbUp'
 
 const styles = {
     card: {
@@ -26,11 +30,15 @@ const styles = {
 }
 
 class Scream extends Component {
+
+    
     render() {
         dayjs.extend(relativeTime);
         dayjs.locale('es');
         const {
             classes,
+            handleLike,
+            authenticated,
             scream: {
                 body,
                 createdAt,
@@ -67,6 +75,10 @@ class Scream extends Component {
                         variant="body1">
                         {body}
                     </Typography>
+                    {<MyButton tip="Like Scream"
+                        onClick={() => { handleLike(screamId) }} authenticated={authenticated}>
+                        <LikeIcon color={"primary"} screamid="Hola"/>
+                    </MyButton>}
                 </CardContent>
             </Card>
         )
