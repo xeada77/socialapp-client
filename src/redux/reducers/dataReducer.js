@@ -17,9 +17,13 @@ export default function (state = initialState, action) {
         case LOADING_DATA:
             return { ...state, loading: true };
         case LIKE_SCREAM:
-            return {...state, screams: action.payload}
         case UNLIKE_SCREAM:
-            return {...state, screams: action.payload}
+            let index = state.screams.findIndex(scream => scream.screamId === action.payload.screamId);
+            console.log(index);
+            state.screams[index] = action.payload;
+            return {
+                ...state
+            }
         default:
             return state;
     }
