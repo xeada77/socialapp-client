@@ -39,9 +39,13 @@ const styles = {
 class Scream extends Component {
 
     likedScream = () => {
-        if (this.props.user.likes && this.props.user.likes.findIndex(like => like.screamId === this.props.scream.screamId)) {
+        if (this.props.user.likes && (this.props.user.likes.findIndex(like => like.screamId === this.props.scream.screamId)) !== -1 ) {
+            console.log(`likedScream ${this.props.scream.screamId}`);
             return true;
-        } else return false;
+        } else {
+            console.log(`not likedScream ${this.props.scream.screamId}`);
+            return false;
+        }
     }
 
     likeScream = () => {
@@ -62,7 +66,6 @@ class Scream extends Component {
                 createdAt,
                 userImg,
                 userHandle,
-                screamId,
                 likeCount,
                 commentCount
             },
@@ -72,17 +75,17 @@ class Scream extends Component {
         } = this.props
 
         const likeButton = !authenticated ? (
-            <MyButton tip="Like">
+            <MyButton tip="Login for Like">
                 <Link to="/login"> <UnlikeIcon color="Primary"/></Link>
             </MyButton>            
         ) : (this.likedScream() ? (
-                <MyButton tip="Like" onClick={this.likeScream}>
-                    <UnlikeIcon color="primary" />        
+                <MyButton tip="Unlike" onClick={this.unlikeScream}>
+                    <LikeIcon color="primary" />        
                 </MyButton>
             ) :
             (
-                <MyButton tip="Unlike" onClick={this.unlikeScream}>
-                        <LikeIcon color="primary"/>        
+                <MyButton tip="Like" onClick={this.likeScream}>
+                    <UnlikeIcon color="primary"/>        
                 </MyButton>))
         return (
             <Card className={classes.card}>
@@ -126,7 +129,6 @@ Scream.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-    data: state.data,
     user: state.user
 });
 
