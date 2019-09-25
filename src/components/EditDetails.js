@@ -20,10 +20,7 @@ import { Button } from '@material-ui/core';
 
 const styles = (theme) => ({
     ...theme,
-    textField: {
-        marginTop: 10
-        
-    }
+    
 });
 
 class EditDetails extends Component {

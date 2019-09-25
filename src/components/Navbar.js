@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import { Link } from 'react-router-dom';
-import MyButton from '../util/MyButton'
+import MyButton from '../util/MyButton';
+import PostScream from '../components/PostScream';
 
 // Redux Stuff
 import { connect } from 'react-redux';
@@ -15,7 +16,6 @@ import IconButton from '@material-ui/core/IconButton';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
-import AddIcon from '@material-ui/icons/Add';
 import NotificationIcon from '@material-ui/icons/Notifications';
 import HomeIcon from '@material-ui/icons/Home';
 import Typography from '@material-ui/core/Typography';
@@ -69,9 +69,7 @@ class Navbar extends Component {
                     {authenticated &&
                         (
                         <Fragment>
-                            <MyButton tip="Post a Scream!">
-                                <AddIcon  />
-                            </MyButton>
+                            <PostScream />
                             <MyButton tip="Notifications">
                                 <NotificationIcon  />
                             </MyButton>

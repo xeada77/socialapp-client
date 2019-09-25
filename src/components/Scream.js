@@ -42,10 +42,8 @@ class Scream extends Component {
 
     likedScream = () => {
         if (this.props.user.likes && (this.props.user.likes.findIndex(like => like.screamId === this.props.scream.screamId)) !== -1 ) {
-            console.log(`likedScream ${this.props.scream.screamId}`);
             return true;
         } else {
-            console.log(`not likedScream ${this.props.scream.screamId}`);
             return false;
         }
     }
@@ -79,7 +77,6 @@ class Scream extends Component {
                 }
             }
         } = this.props
-        console.log(handle, userHandle);
         const likeButton = !authenticated ? (
             <MyButton tip="Login for Like">
                 <Link to="/login"> <UnlikeIcon color="primary" /></Link>
