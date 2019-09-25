@@ -18,10 +18,15 @@ import MenuItem from '@material-ui/core/MenuItem';
 import AddIcon from '@material-ui/icons/Add';
 import NotificationIcon from '@material-ui/icons/Notifications';
 import HomeIcon from '@material-ui/icons/Home';
+import Typography from '@material-ui/core/Typography';
 
 const styles = {
     grow: {
         flexGrow: 1
+    },
+    userHandle: {
+        marginLeft: '1rem',
+        textTransform: 'capitalize'
     }
 }
 
@@ -54,7 +59,7 @@ class Navbar extends Component {
         });
     }
     render() {
-        const { user: {authenticated}, classes, loadingUser } = this.props;
+        const { user: {authenticated,credentials: { handle}}, classes, loadingUser } = this.props;
         return (
             <Appbar position="fixed" className="nav-container" >
                 <Toolbar className="nav-container">
@@ -74,8 +79,9 @@ class Navbar extends Component {
                         )}
                     <div className={classes.grow} />
                     {!loadingUser && (
+                    <Fragment>
                     <div className="nav-action-container">
-                    {!authenticated && (
+                        {!authenticated && (
                         <div>
                             <Button color="inherit" component={Link} to="/login" className="user-but">Login</Button>
                             <Button color="inherit" component={Link} to="/signup" className="user-but">SignUp</Button>
@@ -84,16 +90,18 @@ class Navbar extends Component {
                     {authenticated &&
                         (<div>
                             <Button color="inherit" onClick={this.logout} className="user-but">Logout</Button>
-                            <IconButton
-                            edge="end"
-                            aria-label="account of current user"
-                            aria-haspopup="true"
-                            color="inherit"
-                            className="user-but"
-                            onClick={this.handleOpenMenu}
-                            >
-                                <AccountCircle />
+                                <IconButton
+                                    edge="end"
+                                    aria-label="account of current user"
+                                    aria-haspopup="true"
+                                    color="inherit"
+                                    className="user-but"
+                                    onClick={this.handleOpenMenu}
+                                >
+                                    <AccountCircle /> 
+                                        
                                 </IconButton>
+                            
                                 <Menu
                                     id="simple-menu"
                                     anchorEl={this.state.anchorEl}
@@ -104,10 +112,14 @@ class Navbar extends Component {
                                     <MenuItem onClick={this.handleCloseMenu}>Profile</MenuItem>
                                     <MenuItem onClick={this.handleCloseMenu}>My account</MenuItem>
                                     <MenuItem onClick={this.handleCloseMenu}>Logout</MenuItem>
-                                    </Menu>
-                        </div>
+                                </Menu>
+                            </div>
                                 )}
                         </div>
+                        <div>
+                        <Typography className={classes.userHandle}>{handle}</Typography> 
+                        </div>  
+                    </Fragment>
                     )}    
                 </Toolbar>
             </Appbar>

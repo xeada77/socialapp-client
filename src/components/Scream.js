@@ -1,5 +1,6 @@
 import React, { Component} from 'react';
 import MyButton from '../util/MyButton';
+import DeleteScream from '../components/DeleteScream'
 import withStyles from '@material-ui/core/styles/withStyles';
 import {Link} from 'react-router-dom';
 import dayjs from 'dayjs';
@@ -25,7 +26,8 @@ import ChatIcon from '@material-ui/icons/Chat';
 const styles = {
     card: {
         display: 'flex',
-        marginBottom: 20
+        marginBottom: 20,
+        position: 'relative'
     },
     image: {
         minWidth: 200,
@@ -48,11 +50,11 @@ class Scream extends Component {
         }
     }
 
-    likeScream = () => {
+    handleLikeScream = () => {
         this.props.likeScream(this.props.scream.screamId);
     }
 
-    unlikeScream = () => {
+    handleUnlikeScream = () => {
         this.props.unlikeScream(this.props.scream.screamId);
     }
 
@@ -65,28 +67,38 @@ class Scream extends Component {
                 body,
                 createdAt,
                 userImg,
+                screamId,
                 userHandle,
                 likeCount,
                 commentCount
             },
             user: {
-                authenticated
+                authenticated,
+                credentials: {
+                    handle
+                }
             }
         } = this.props
-
+        console.log(handle, userHandle);
         const likeButton = !authenticated ? (
             <MyButton tip="Login for Like">
-                <Link to="/login"> <UnlikeIcon color="Primary"/></Link>
-            </MyButton>            
+                <Link to="/login"> <UnlikeIcon color="primary" /></Link>
+            </MyButton>
         ) : (this.likedScream() ? (
-                <MyButton tip="Unlike" onClick={this.unlikeScream}>
-                    <LikeIcon color="primary" />        
-                </MyButton>
-            ) :
-            (
-                <MyButton tip="Like" onClick={this.likeScream}>
-                    <UnlikeIcon color="primary"/>        
-                </MyButton>))
+            <MyButton tip="Unlike" onClick={this.handleUnlikeScream}>
+                <LikeIcon color="primary" />
+            </MyButton>
+        ) :
+        (
+            <MyButton tip="Like" onClick={this.handleLikeScream}>
+                <UnlikeIcon color="primary" />
+            </MyButton>));
+        
+        const deleteButton = authenticated && userHandle === handle ? (
+            <DeleteScream screamId={screamId}/>
+        ): null;
+
+
         return (
             <Card className={classes.card}>
                 <CardMedia
@@ -107,6 +119,7 @@ class Scream extends Component {
                         color="textSecondary">
                         {dayjs(createdAt).fromNow()}
                     </Typography>
+                    {deleteButton}
                     <Typography
                         variant="body1">
                         {body}
