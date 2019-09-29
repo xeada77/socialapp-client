@@ -1,12 +1,12 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import withStyles from '@material-ui/core/styles/withStyles';
-import MyButton from '../util/MyButton';
-import theme from '../util/theme';
+import MyButton from '../../util/MyButton';
+import theme from '../../util/theme';
 
 
 // Redux
-import { postScream } from './../redux/actions/dataActions';
+import { postScream, clearErrors } from '../../redux/actions/dataActions';
 import { connect } from 'react-redux';
 
 
@@ -26,15 +26,12 @@ import AddIcon from '@material-ui/icons/Add';
 const styles = {
     ...theme,
     submitButton: {
-        position: 'relative'
+        position: 'relative',
+        float: 'right',
+        marginTop: 10
     },
     progressSpiner: {
         position: 'absolute'
-    },
-    closeButton: {
-        position: 'absolute',
-        left: '90%',
-        top: '10%'
     }
 };
 
@@ -53,8 +50,7 @@ class PostScream extends Component {
             });
         }
         if (!nextProps.UI.errors && !nextProps.UI.loading) {
-            this.setState({ body: '' });
-            this.handleClose();
+            this.setState({ body: '' , open: false, errors: {}});
         }
     }
 
@@ -63,6 +59,7 @@ class PostScream extends Component {
     }
 
     handleClose = () => {
+        this.props.clearErrors();
         this.setState({ open: false });
     }
 
@@ -90,7 +87,7 @@ class PostScream extends Component {
                     fullWidth
                     maxWidth="sm"
                 >
-                    <MyButton tip="close" onClick={this.handleClose}>
+                    <MyButton tip="close" onClick={this.handleClose} tipClassName={classes.closeButton}>
                         <CloseIcon />
                     </MyButton>
                     <DialogTitle>
@@ -112,6 +109,7 @@ class PostScream extends Component {
                                 }
                                 onChange={this.handleChange}
                                 fullWidth
+                                variant="filled"
                             />
                             
                             <Button
@@ -140,4 +138,4 @@ const mapStateToProps = (state) => ({
     UI: state.UI
 });
 
-export default connect(mapStateToProps, { postScream })(withStyles(styles)(PostScream));
+export default connect(mapStateToProps, { postScream, clearErrors })(withStyles(styles)(PostScream));

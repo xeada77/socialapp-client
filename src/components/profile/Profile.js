@@ -1,9 +1,9 @@
 import React, { Component, Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import dayjs from 'dayjs';
-import theme from './../util/theme';
+import theme from '../../util/theme';
 import EditDetails from './EditDetails';
-import MyButton from '../util/MyButton'
+import MyButton from '../../util/MyButton'
 
 
 import withStyles from '@material-ui/core/styles/withStyles';

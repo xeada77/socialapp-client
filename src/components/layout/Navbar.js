@@ -1,11 +1,11 @@
 import React, { Component, Fragment } from 'react';
 import { Link } from 'react-router-dom';
-import MyButton from '../util/MyButton';
-import PostScream from '../components/PostScream';
+import MyButton from '../../util/MyButton';
+import PostScream from '../scream/PostScream';
 
 // Redux Stuff
 import { connect } from 'react-redux';
-import { logoutUser } from './../redux/actions/userActions';
+import { logoutUser } from '../../redux/actions/userActions';
 
 // Material-UI Stuff
 import withStyles from '@material-ui/core/styles/withStyles';
@@ -63,9 +63,11 @@ class Navbar extends Component {
         return (
             <Appbar position="fixed" className="nav-container" >
                 <Toolbar className="nav-container">
-                    <MyButton tip="Home">
-                        <Link to="/"><HomeIcon  /></Link>
-                    </MyButton>
+                    <Link to="/">
+                        <MyButton tip="Home">
+                        <HomeIcon  />
+                        </MyButton>
+                    </Link>
                     {authenticated &&
                         (
                         <Fragment>

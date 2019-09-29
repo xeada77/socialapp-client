@@ -1,9 +1,9 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import withStyles from '@material-ui/core/styles/withStyles';
-import { editUserDetails } from './../redux/actions/userActions';
+import { editUserDetails } from '../../redux/actions/userActions';
 import { connect } from 'react-redux';
-import MyButton from '../util/MyButton';
+import MyButton from '../../util/MyButton';
 
 
 // MUI Stuff
@@ -15,7 +15,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 // Icons
 import EditIcon from '@material-ui/icons/Edit';
 import TextField from '@material-ui/core/TextField';
-import theme from '../util/theme';
+import theme from '../../util/theme';
 import { Button } from '@material-ui/core';
 
 const styles = (theme) => ({
