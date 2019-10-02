@@ -103,7 +103,7 @@ class Profile extends Component {
                         </div>
                         <hr />
                         <div className="profile-details">
-                            <MuiLink component={Link} to={`/users/${handle}`} color='primary' variant='h5'>@{handle}</MuiLink>
+                            <MuiLink component={Link} to={`/user/${handle}`} color='primary' variant='h5'>@{handle}</MuiLink>
                             <hr />
                             {bio && <Typography variant='body2'>{bio}</Typography>}
                             <hr />

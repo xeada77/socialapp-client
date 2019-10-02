@@ -16,6 +16,7 @@ import { logoutUser, getUserData } from './redux/actions/userActions';
 import home from './pages/home';
 import login from './pages/login';
 import signup from './pages/signup';
+import user from './pages/user';
 import { SET_AUTHENTICATED } from './redux/types';
 
 // Components
@@ -61,8 +62,9 @@ class App extends Component {
                   exact
                   path="/signup"
                   component={signup}
-                  authenticated={this.props.authenticated} />
-                </Switch>
+                authenticated={this.props.authenticated} />
+                <Route exact path="/user/:handle" component={user}/>
+              </Switch>
             </div>
           </Router>
           

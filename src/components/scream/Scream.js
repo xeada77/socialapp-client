@@ -44,6 +44,7 @@ class Scream extends Component {
     render() {
         dayjs.extend(relativeTime);
         dayjs.locale('es');
+        
         const {
             classes,
             scream: {
@@ -81,7 +82,7 @@ class Scream extends Component {
                     <Typography
                         variant="h5"
                         color="primary"
-                        component={Link} to={`/users/${userHandle}`}>
+                        component={Link} to={`/user/${userHandle}`}>
                         {userHandle}
                     </Typography>
                     <Typography

@@ -7,11 +7,11 @@ import dayjs from 'dayjs';
 import { Link } from 'react-router-dom';
 import LikeButton from './LikeButton';
 import Comments from './Comments';
-
+import CommentForm from './CommentForm';
 
 
 // Redux
-import { getScream } from '../../redux/actions/dataActions';
+import { getScream, clearErrors } from '../../redux/actions/dataActions';
 import { connect } from 'react-redux';
 
 
@@ -62,6 +62,7 @@ class ScreamDialog extends Component {
 
     handleClose = () => {
         this.setState({ open: false });
+        this.props.clearErrors();
     }
 
     render() {
@@ -115,7 +116,7 @@ class ScreamDialog extends Component {
                         </MyButton>
                         <span>{commentCount} Comments </span>
                     </Grid>
-                    <hr className={classes.visibleSeparator} />
+                    <CommentForm screamId={screamId}/>
                     <Comments comments={comments}/>
             </Grid>
             );
@@ -159,7 +160,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapActionsToProps = {
-    getScream
+    getScream,
+    clearErrors
 }
 
 export default connect(mapStateToProps, mapActionsToProps)(withStyles(styles)(ScreamDialog));

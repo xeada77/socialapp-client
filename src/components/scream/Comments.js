@@ -33,6 +33,7 @@ class Comments extends Component {
                     const { body, createdAt, userHandle, userImg } = comment;
                     return (
                         <Fragment key={createdAt}>
+                            <hr className={classes.visibleSeparator} />
                             <Grid item sm={12}>
                                 <Grid container>
                                     <Grid item sm={2}>
@@ -62,8 +63,6 @@ class Comments extends Component {
                                     </Grid>
                                 </Grid>
                             </Grid>
-                            {index !== comments.length -1 && (
-                            <hr className={classes.visibleSeparator}/>)}
                         </Fragment>
                     )
                 })}
