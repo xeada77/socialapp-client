@@ -18,7 +18,6 @@ class home extends Component {
     }
 
 
-
     render() {
         const { user, uploadImage, data:{screams, loading} } = this.props;
         
