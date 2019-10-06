@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import withStyles from '@material-ui/core/styles/withStyles';
 import MyButton from '../../util/MyButton';
@@ -35,66 +35,65 @@ const styles = {
     }
 };
 
-class PostScream extends Component {
+const PostScream = props => {
 
-    state = {
-        open: false,
-        body: '',
-        errors: {}
-    }
+    const [open, setOpen] = useState(false);
+    const [errors, setErrors] = useState({});
+    const [inputs, setInputs] = useState({ body: '' });
 
-    componentWillReceiveProps(nextProps) {
-        if (nextProps.UI.errors) {
-            this.setState({
-                errors: nextProps.UI.errors
-            });
+    useEffect(() => {
+        console.log('ui errors changed', props.UI.errors);
+        if (props.UI.errors) setErrors(props.UI.errors);
+        if (!props.UI.errors && !props.UI.loading) {
+            console.log('clear');
+            setErrors({});
+            setOpen(false);
+            setInputs({ body: '' });
         }
-        if (!nextProps.UI.errors && !nextProps.UI.loading) {
-            this.setState({ body: '' , open: false, errors: {}});
-        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [props.UI.errors])
+
+
+    const handleOpen = () => {
+        setOpen(true);
     }
 
-    handleOpen = () => {
-        this.setState({ open: true });
+    const handleClose = () => {
+        props.clearErrors();
+        setOpen(false);
     }
 
-    handleClose = () => {
-        this.props.clearErrors();
-        this.setState({ open: false });
-    }
-
-    handleSubmit = (event) => {
+    const handleSubmit = (event) => {
         event.preventDefault();
-        this.props.postScream({ body: this.state.body });
+        props.postScream({ body: inputs.body });
     }
 
-    handleChange = (event) => {
-        this.setState({ [event.target.name]: event.target.value });
+    const handleChange = (event) => {
+        const {name, value} = event.target
+        setInputs({[name] : value});
     }
 
-    render() {
-        const { errors } = this.state;
-        const { classes, UI: { loading } } = this.props;
+    const { classes, UI: { loading } } = props;
         
-        return (
-            <Fragment>
-                <MyButton onClick={this.handleOpen} tip="Post a Scream!">
+    return (
+        <Fragment>
+            <MyButton onClick={handleOpen} tip="Post a Scream!">
                     <AddIcon />
                 </MyButton>
                 <Dialog
-                    open={this.state.open}
-                    onClose={this.handleClose}
+                    open={open}
+                    onClose={handleClose}
                     fullWidth
                     maxWidth="sm"
                 >
-                    <MyButton tip="close" onClick={this.handleClose} tipClassName={classes.closeButton}>
+                    <MyButton tip="close" onClick={handleClose} tipClassName={classes.closeButton}>
                         <CloseIcon />
                     </MyButton>
                     <DialogTitle>
                         Post a new scream
                     </DialogTitle>
                     <DialogContent>
-                        <form onSubmit={this.handleSubmit}>
+                        <form onSubmit={handleSubmit}>
                             <TextField
                                 name="body"
                                 tipe="test"
@@ -107,7 +106,7 @@ class PostScream extends Component {
                                 className={
                                     classes.textField
                                 }
-                                onChange={this.handleChange}
+                                onChange={handleChange}
                                 fullWidth
                                 variant="filled"
                             />
@@ -126,7 +125,7 @@ class PostScream extends Component {
                 </Dialog>
             </Fragment>
         )
-    }
+    
 }
 
 PostScream.propTypes = {

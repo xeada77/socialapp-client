@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useEffect } from 'react';
 import Scream from './../components/scream/Scream';
 import Profile from './../components/profile/Profile';
 
@@ -11,15 +11,20 @@ import { getScreams} from '../redux/actions/dataActions';
 import Grid from '@material-ui/core/Grid';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
-class home extends Component {
+const Home = (props) => {
 
-    async componentDidMount() {
-        this.props.getScreams();
-    }
+    useEffect(() => {
+        console.log('DidMount');
+        props.getScreams();
+        return () => {
+            console.log('unmount')
+        };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
 
 
-    render() {
-        const { user, uploadImage, data:{screams, loading} } = this.props;
+    
+        const { user, uploadImage, data:{screams, loading} } = props;
         
         let recentScreamsMarkup = loading ? (<div className="loading-container"><CircularProgress size="5rem" /></div>) : (
             screams.map(scream => {
@@ -38,7 +43,7 @@ class home extends Component {
             </Grid>
         )
     }
-}
+
 
 const mapStateToProps = (state) => ({
     user: state.user,
@@ -50,4 +55,4 @@ const mapActionsToProps = {
     getScreams
 }
 
-export default connect(mapStateToProps, mapActionsToProps)(home)
+export default connect(mapStateToProps, mapActionsToProps)(Home)

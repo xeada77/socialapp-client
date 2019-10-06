@@ -53,7 +53,7 @@ const styles = {
         },
     }
 }
-function StaticProfile(props) {
+const StaticProfile = (props) => {
 
     
 

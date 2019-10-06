@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
 import { getUserData } from '../redux/actions/dataActions';
 import axios from "axios";
 import { connect } from "react-redux";
@@ -10,56 +10,54 @@ import PropTypes from 'prop-types';
 import Grid from "@material-ui/core/Grid";
 import CircularProgress from '@material-ui/core/CircularProgress';
 
-class user extends Component {
+const User = (props) => {
 
-    state = {
-        profile: null
-    };
-
-    componentDidMount() {
-        const handle = this.props.match.params.handle;
-        this.props.getUserData(handle);
+    const [profile, setProfile] = useState(null)
+    
+    useEffect(() => {
+        const handle = props.match.params.handle;
+        props.getUserData(handle);
         axios.get(`/user/${handle}`)
             .then(res => {
-                this.setState({ profile: res.data.user });
-                console.log(this.state.profile)
+                setProfile(res.data.user);
+                console.log(profile);
             })
             .catch(err => console.log(err));
-    }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
-    render() {
-        const { screams, loading } = this.props.data;
+    
+    const { screams, loading } = props.data;
 
-        const screamsMarkup = loading ? (<p>Loading ....</p>) : screams === null ?
+    const screamsMarkup = loading ? (<div className="loading-container"><CircularProgress size="5rem" /></div>) : screams === null ?
             (
                 <p>No screams for this user</p>
             ) : (
                 screams.map(scream => <Scream key={scream.screamId} scream={scream}/>)
             )
 
-        return (
+    return (
             <Grid container spacing={3}>
                 <Grid item sm={8} xs={12}>
                     {screamsMarkup}
                 </Grid>
                 <Grid item sm={4} xs={12}>
-                    {this.state.profile === null ? (<div className="loading-container"><CircularProgress size="5rem" /></div>) : (<StaticProfile profile={this.state.profile}/>)}
+                    {profile === null ? (<div className="loading-container"><CircularProgress size="5rem" /></div>) : (<StaticProfile profile={profile}/>)}
                 
                 </Grid>
             </Grid>
-        );
-    }
-
+    )
 }
 
-user.propTypes = {
+
+User.propTypes = {
     getUserData: PropTypes.func.isRequired,
     data: PropTypes.object.isRequired
-} 
+}  
 
 
 const mapStateToProps = state => ({
     data: state.data
 });
 
-export default connect(mapStateToProps, { getUserData })(user);
+export default connect(mapStateToProps, { getUserData })(User);

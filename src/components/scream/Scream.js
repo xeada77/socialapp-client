@@ -1,4 +1,4 @@
-import React, { Component} from 'react';
+import React from 'react';
 import MyButton from '../../util/MyButton';
 import DeleteScream from './DeleteScream';
 import ScreamDialog from './ScreamDialog';
@@ -37,11 +37,9 @@ const styles = {
     }
 }
 
-class Scream extends Component {
+const Scream = props => {
 
     
-
-    render() {
         dayjs.extend(relativeTime);
         dayjs.locale('es');
         
@@ -62,7 +60,7 @@ class Scream extends Component {
                     handle
                 }
             }
-        } = this.props
+        } = props
 
         
         const deleteButton = authenticated && userHandle === handle ? (
@@ -105,7 +103,6 @@ class Scream extends Component {
                 </CardContent>
             </Card>
         )
-    }
 }
 
 Scream.propTypes = {
