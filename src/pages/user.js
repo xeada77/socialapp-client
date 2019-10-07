@@ -9,11 +9,12 @@ import PropTypes from 'prop-types';
 // MUI
 import Grid from "@material-ui/core/Grid";
 import CircularProgress from '@material-ui/core/CircularProgress';
+import Typography from "@material-ui/core/Typography";
 
 class user extends Component {
 
     state = {
-        profile: null
+        profile: null,
     };
 
     componentDidMount() {
@@ -29,8 +30,9 @@ class user extends Component {
 
     render() {
         const { screams, loading } = this.props.data;
+        
 
-        const screamsMarkup = loading ? (<p>Loading ....</p>) : screams === null ?
+        const screamsMarkup = loading ? (<div className="loading-container"><CircularProgress size="5rem" /></div>) : screams === null ?
             (
                 <p>No screams for this user</p>
             ) : (
@@ -40,6 +42,7 @@ class user extends Component {
         return (
             <Grid container spacing={3}>
                 <Grid item sm={8} xs={12}>
+                    {this.state.profile === null ? null : (<Typography align="center" variant="h4" color="primary">Screams of <span style={{textTransform: 'capitalize'}}>{this.state.profile.handle}</span></Typography>)}
                     {screamsMarkup}
                 </Grid>
                 <Grid item sm={4} xs={12}>
